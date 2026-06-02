@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useSyncExternalStore } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import {
   defaultLocale,
@@ -20,8 +21,30 @@ function withLocale(href, locale) {
   };
 }
 
-function currentPathWithLocale(pathname, searchParams, locale) {
-  const params = new URLSearchParams(searchParams.toString());
+function subscribeToUrlChanges(onStoreChange) {
+  window.addEventListener("popstate", onStoreChange);
+  window.addEventListener("viewer:url-change", onStoreChange);
+
+  return () => {
+    window.removeEventListener("popstate", onStoreChange);
+    window.removeEventListener("viewer:url-change", onStoreChange);
+  };
+}
+
+function getCurrentSearch() {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
+  return window.location.search.replace(/^\?/, "");
+}
+
+function getServerSearch() {
+  return "";
+}
+
+function currentPathWithLocale(pathname, search, locale) {
+  const params = new URLSearchParams(search);
 
   if (locale === defaultLocale) {
     params.delete("lang");
@@ -37,7 +60,14 @@ function currentPathWithLocale(pathname, searchParams, locale) {
 export default function SiteHeader() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const locale = resolveLocale(searchParams.get("lang"));
+  const currentSearch = useSyncExternalStore(
+    subscribeToUrlChanges,
+    getCurrentSearch,
+    getServerSearch
+  );
+  const resolvedSearch = currentSearch || searchParams.toString();
+  const resolvedParams = new URLSearchParams(resolvedSearch);
+  const locale = resolveLocale(resolvedParams.get("lang"));
   const navigation = headerContent.navigation[locale];
   const siteName = headerContent.siteName[locale];
 
@@ -74,7 +104,7 @@ export default function SiteHeader() {
             {Object.entries(headerContent.languages).map(([code, label]) => (
               <Link
                 key={code}
-                href={currentPathWithLocale(pathname, searchParams, code)}
+                href={currentPathWithLocale(pathname, resolvedSearch, code)}
                 className={`language-nav__link ${
                   locale === code ? "language-nav__link--active" : ""
                 }`}

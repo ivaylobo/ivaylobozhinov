@@ -2,8 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { A11y, Keyboard, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import { localeQuery, resolveLocale } from "@/graphql/siteData";
+import "swiper/css";
+import "swiper/css/pagination";
 
 function projectHref(project, locale, photoNumber) {
   const query = {
@@ -21,6 +26,52 @@ function projectHref(project, locale, photoNumber) {
   };
 }
 
+function viewerPath(project, locale, photoNumber) {
+  const params = new URLSearchParams(localeQuery(locale));
+  params.set("photo", String(photoNumber));
+
+  return `/projects/${project.slug}?${params.toString()}`;
+}
+
+function replaceViewerUrl(project, locale, photoNumber) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  const nextPath = viewerPath(project, locale, photoNumber);
+  const currentPath = `${window.location.pathname}${window.location.search}`;
+
+  if (nextPath !== currentPath) {
+    window.history.replaceState(window.history.state, "", nextPath);
+    window.dispatchEvent(new Event("viewer:url-change"));
+  }
+}
+
+function CarouselControls({ labels }) {
+  const swiper = useSwiper();
+
+  return (
+    <>
+      <button
+        type="button"
+        className="carousel-button carousel-button--prev"
+        aria-label={labels.previous}
+        onClick={() => swiper.slidePrev()}
+      >
+        <div className="carousel-button__arrow" aria-hidden="true" />
+      </button>
+      <button
+        type="button"
+        className="carousel-button carousel-button--next"
+        aria-label={labels.next}
+        onClick={() => swiper.slideNext()}
+      >
+        <div className="carousel-button__arrow" aria-hidden="true" />
+      </button>
+    </>
+  );
+}
+
 export default function GalleryExperience({
   project,
   labels,
@@ -34,6 +85,10 @@ export default function GalleryExperience({
     (image) => image.number === requestedNumber
   );
   const activeImage = activeIndex >= 0 ? project.images[activeIndex] : null;
+  const [viewerState, setViewerState] = useState(() => ({
+    routeIndex: activeIndex,
+    currentIndex: activeIndex >= 0 ? activeIndex : 0,
+  }));
 
   if (!activeImage) {
     return (
@@ -72,14 +127,29 @@ export default function GalleryExperience({
     );
   }
 
-  const previousImage =
-    project.images[
-      (activeIndex - 1 + project.images.length) % project.images.length
-    ];
-  const nextImage = project.images[(activeIndex + 1) % project.images.length];
+  const currentIndex =
+    viewerState.routeIndex === activeIndex
+      ? viewerState.currentIndex
+      : activeIndex;
+  const currentImage = project.images[currentIndex] ?? activeImage;
+
+  function handleSlideChange(swiper) {
+    const nextIndex = swiper.realIndex;
+    const nextImage = project.images[nextIndex];
+
+    if (!nextImage) {
+      return;
+    }
+
+    setViewerState({
+      routeIndex: activeIndex,
+      currentIndex: nextIndex,
+    });
+    replaceViewerUrl(project, locale, nextImage.number);
+  }
 
   return (
-    <section className="viewer" aria-label={activeImage.caption}>
+    <section className="viewer" aria-label={currentImage.caption}>
       <div className="viewer__top">
         <Link
           href={projectHref(project, locale)}
@@ -89,57 +159,51 @@ export default function GalleryExperience({
           {labels.backToGallery}
         </Link>
         <span>
-          {activeIndex + 1} / {project.images.length}
+          {currentIndex + 1} / {project.images.length}
         </span>
       </div>
 
       <div className="viewer__stage">
-        <Link
-          href={projectHref(project, locale, previousImage.number)}
-          scroll={false}
-          className="carousel-button carousel-button--prev"
-          aria-label={labels.previous}
+        <Swiper
+          key={`${project.slug}-${activeImage.number}`}
+          modules={[A11y, Keyboard, Pagination]}
+          initialSlide={activeIndex}
+          loop={project.images.length > 1}
+          speed={420}
+          slidesPerView={1}
+          keyboard={{ enabled: true }}
+          pagination={{
+            bulletElement: "button",
+            clickable: true,
+          }}
+          a11y={{
+            prevSlideMessage: labels.previous,
+            nextSlideMessage: labels.next,
+          }}
+          className="viewer__swiper"
+          onSlideChange={handleSlideChange}
         >
-          &lt;
-        </Link>
-
-        <figure className="viewer__image">
-          <Image
-            src={activeImage.src}
-            alt={activeImage.alt}
-            fill
-            sizes="100vw"
-            className="image-contain"
-            loading="eager"
-            fetchPriority="high"
-          />
-        </figure>
-
-        <Link
-          href={projectHref(project, locale, nextImage.number)}
-          scroll={false}
-          className="carousel-button carousel-button--next"
-          aria-label={labels.next}
-        >
-          &gt;
-        </Link>
+          {project.images.map((image, index) => (
+            <SwiperSlide key={image.src} className="viewer__slide">
+              <figure className="viewer__image">
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  sizes="100vw"
+                  className="image-contain"
+                  loading={index === activeIndex ? "eager" : "lazy"}
+                  fetchPriority={index === activeIndex ? "high" : undefined}
+                />
+              </figure>
+            </SwiperSlide>
+          ))}
+          <CarouselControls labels={labels} />
+        </Swiper>
       </div>
 
       <div className="viewer__caption">
-        <p>{activeImage.caption}</p>
-        <div className="viewer__strip" aria-label={labels.allPhotos}>
-          {project.images.map((image) => (
-            <Link
-              key={image.src}
-              href={projectHref(project, locale, image.number)}
-              scroll={false}
-              className={`viewer__dot ${
-                image.number === activeImage.number ? "viewer__dot--active" : ""
-              }`}
-              aria-label={`${project.title}, ${image.number}`}
-            />
-          ))}
-        </div>
+        <p>{currentImage.caption}</p>
       </div>
     </section>
   );
