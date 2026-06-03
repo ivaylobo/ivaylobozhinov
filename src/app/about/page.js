@@ -15,6 +15,12 @@ export default async function AboutPage({ searchParams }) {
         <div className="content-split__copy">
           <p className="eyebrow">{about.eyebrow}</p>
           <h1>{about.title}</h1>
+          <p>{about.recognitionIntro}</p>
+          <ul className="about-awards">
+            {about.recognitions.map((recognition) => (
+              <li key={recognition}>{recognition}</li>
+            ))}
+          </ul>
           {about.body.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}

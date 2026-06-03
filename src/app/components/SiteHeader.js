@@ -57,6 +57,14 @@ function currentPathWithLocale(pathname, search, locale) {
   return query ? `${pathname}?${query}` : pathname;
 }
 
+function isActiveNavigationItem(pathname, href) {
+  if (href === "/") {
+    return pathname === "/" || pathname.startsWith("/projects");
+  }
+
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export default function SiteHeader() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -70,6 +78,7 @@ export default function SiteHeader() {
   const locale = resolveLocale(resolvedParams.get("lang"));
   const navigation = headerContent.navigation[locale];
   const siteName = headerContent.siteName[locale];
+  const showBrandText = pathname !== "/";
 
   return (
     <header className="site-header">
@@ -82,9 +91,11 @@ export default function SiteHeader() {
           <span className="site-brand__mark" aria-hidden="true">
             <Image src="/brand-mark.svg" alt="" width={42} height={42} />
           </span>
-          <span className="site-brand__text">
-            <span>{siteName}</span>
-          </span>
+          {showBrandText ? (
+            <span className="site-brand__text">
+              <span>{siteName}</span>
+            </span>
+          ) : null}
         </Link>
 
         <div className="site-header__controls">
@@ -93,7 +104,11 @@ export default function SiteHeader() {
               <Link
                 key={item.href}
                 href={withLocale(item.href, locale)}
-                className="site-nav__link"
+                className={`site-nav__link ${
+                  isActiveNavigationItem(pathname, item.href)
+                    ? "site-nav__link--active"
+                    : ""
+                }`}
               >
                 {item.label}
               </Link>

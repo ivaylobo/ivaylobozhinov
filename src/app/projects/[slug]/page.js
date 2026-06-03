@@ -115,6 +115,10 @@ export default async function ProjectPage({ params, searchParams }) {
     notFound();
   }
 
+  const descriptionParagraphs = Array.isArray(project.description)
+    ? project.description
+    : [project.description];
+
   return (
     <main className="project-page">
       <section className="project-hero">
@@ -141,7 +145,9 @@ export default async function ProjectPage({ params, searchParams }) {
             {project.location} / {project.year}
           </p>
           <h1>{project.title}</h1>
-          <p>{project.description}</p>
+          {descriptionParagraphs.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
           <FacebookShareButton label={labels.shareToFacebook} locale={locale} />
         </div>
       </section>

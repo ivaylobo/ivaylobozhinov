@@ -126,6 +126,10 @@ img {
   white-space: nowrap;
 }
 
+.site-nav__link--active {
+  color: var(--accent);
+}
+
 .language-nav {
   display: flex;
   align-items: center;
@@ -165,6 +169,14 @@ img {
 
 .intro__copy {
   max-width: 760px;
+}
+
+.intro--solo {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.intro--solo .intro__copy {
+  max-width: 820px;
 }
 
 .eyebrow {
@@ -334,6 +346,22 @@ h3 {
 
 .content-split__copy h1 {
   margin-bottom: 10px;
+}
+
+.about-awards {
+  display: grid;
+  gap: 8px;
+  padding: 2px 0 6px;
+  list-style: none;
+}
+
+.about-awards li {
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 750;
+  line-height: 1.45;
+  padding-top: 8px;
 }
 
 .content-split__image {
@@ -670,6 +698,10 @@ h3 {
 @media (hover: hover) and (pointer: fine) {
   .site-nav__link:hover {
     color: var(--muted);
+  }
+
+  .site-nav__link--active:hover {
+    color: var(--accent);
   }
 
   .language-nav__link:hover {

@@ -21,27 +21,15 @@ export default async function Home({ searchParams }) {
 
   return (
     <main className="page">
-      <section className="intro">
+      <section className="intro intro--solo">
         <div className="intro__copy">
-          <p className="eyebrow">{labels.selectedWorks}</p>
           <h1>{site.name}</h1>
           <p>{site.intro}</p>
         </div>
-        <dl className="intro__meta" aria-label="Portfolio details">
-          <div>
-            <dt>{labels.selectedWorks}</dt>
-            <dd>{projects.length}</dd>
-          </div>
-          <div>
-            <dt>{labels.location}</dt>
-            <dd>{site.location}</dd>
-          </div>
-        </dl>
       </section>
 
       <section className="project-index" aria-labelledby="projects-title">
         <div className="section-heading">
-          <p className="eyebrow">{labels.projects}</p>
           <h2 id="projects-title">{labels.selectedWorks}</h2>
         </div>
 
