@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useSyncExternalStore } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import {
   defaultLocale,
@@ -19,28 +18,6 @@ function withLocale(href, locale) {
     pathname: href,
     query: { lang: locale },
   };
-}
-
-function subscribeToUrlChanges(onStoreChange) {
-  window.addEventListener("popstate", onStoreChange);
-  window.addEventListener("viewer:url-change", onStoreChange);
-
-  return () => {
-    window.removeEventListener("popstate", onStoreChange);
-    window.removeEventListener("viewer:url-change", onStoreChange);
-  };
-}
-
-function getCurrentSearch() {
-  if (typeof window === "undefined") {
-    return "";
-  }
-
-  return window.location.search.replace(/^\?/, "");
-}
-
-function getServerSearch() {
-  return "";
 }
 
 function currentPathWithLocale(pathname, search, locale) {
@@ -68,17 +45,11 @@ function isActiveNavigationItem(pathname, href) {
 export default function SiteHeader() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentSearch = useSyncExternalStore(
-    subscribeToUrlChanges,
-    getCurrentSearch,
-    getServerSearch
-  );
-  const resolvedSearch = currentSearch || searchParams.toString();
+  const resolvedSearch = searchParams.toString();
   const resolvedParams = new URLSearchParams(resolvedSearch);
   const locale = resolveLocale(resolvedParams.get("lang"));
   const navigation = headerContent.navigation[locale];
   const siteName = headerContent.siteName[locale];
-  const showBrandText = pathname !== "/";
 
   return (
     <header className="site-header">
@@ -91,11 +62,9 @@ export default function SiteHeader() {
           <span className="site-brand__mark" aria-hidden="true">
             <Image src="/brand-mark.svg" alt="" width={42} height={42} />
           </span>
-          {showBrandText ? (
-            <span className="site-brand__text">
-              <span>{siteName}</span>
-            </span>
-          ) : null}
+          <span className="site-brand__text">
+            <span>{siteName}</span>
+          </span>
         </Link>
 
         <div className="site-header__controls">
@@ -123,6 +92,7 @@ export default function SiteHeader() {
                 className={`language-nav__link ${
                   locale === code ? "language-nav__link--active" : ""
                 }`}
+                aria-current={locale === code ? "true" : undefined}
               >
                 {label}
               </Link>

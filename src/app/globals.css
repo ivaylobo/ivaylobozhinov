@@ -259,6 +259,11 @@ h3 {
   padding: 34px 0 0;
 }
 
+.project-index__title {
+  font-size: 54px;
+  line-height: 1;
+}
+
 .section-heading {
   display: flex;
   max-width: 760px;
@@ -704,8 +709,8 @@ h3 {
     color: var(--accent);
   }
 
-  .language-nav__link:hover {
-    color: var(--accent);
+  .language-nav__link:not(.language-nav__link--active):hover {
+    color: var(--ink);
   }
 
   .project-card:hover,
@@ -743,6 +748,10 @@ h3 {
   }
 
   h2 {
+    font-size: 46px;
+  }
+
+  .project-index__title {
     font-size: 46px;
   }
 
@@ -840,6 +849,10 @@ h3 {
   }
 
   h2 {
+    font-size: 34px;
+  }
+
+  .project-index__title {
     font-size: 34px;
   }
 

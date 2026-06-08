@@ -23,14 +23,15 @@ export default async function Home({ searchParams }) {
     <main className="page">
       <section className="intro intro--solo">
         <div className="intro__copy">
-          <h1>{site.name}</h1>
           <p>{site.intro}</p>
         </div>
       </section>
 
       <section className="project-index" aria-labelledby="projects-title">
         <div className="section-heading">
-          <h2 id="projects-title">{labels.selectedWorks}</h2>
+          <h1 id="projects-title" className="project-index__title">
+            {labels.selectedWorks}
+          </h1>
         </div>
 
         <div className="project-grid">
