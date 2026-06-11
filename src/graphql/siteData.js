@@ -256,7 +256,7 @@ export const siteContent = {
     {
       slug: "nevermore",
       title: "Nevermore",
-      year: "2026",
+      year: "2025",
       location: {
         en: "Sofia",
         bg: "София",
@@ -292,6 +292,105 @@ export const siteContent = {
         title: "Nevermore",
       }),
     },
+    {
+      slug: "buffer-space",
+      title: {
+        en: "Buffer space",
+        bg: "Буферно пространство",
+      },
+      year: "2018",
+      location: {
+        en: "Sofia",
+        bg: "София",
+      },
+      folder: "buffer_space",
+      cover: "/buffer_space/1.jpg",
+      summary: {
+        en: "A photographic series about the intangible spaces that give meaning to ordinary, seemingly concrete things.",
+        bg: "Фотографска серия за неуловимите пространства, които придават смисъл на обикновените, привидно конкретни неща.",
+      },
+      description: {
+        en: [
+          "People believe that essential things are concrete. They can be named, and even if they are not material, they are tangible and real. Sometimes, however, the key element that gives meaning turns out to be unfathomable. Like the pauses in the music, or the conversations about the weather with the morning coffee.",
+        ],
+        bg: [
+          "Хората вярват, че съществените неща са конкретни. Те могат да бъдат назовани и дори когато не са материални, са осезаеми и реални. Понякога обаче ключовият елемент, който придава смисъл, се оказва неуловим. Като паузите в музиката или разговорите за времето на сутрешното кафе.",
+        ],
+      },
+      images: makeImages({
+        folder: "buffer_space",
+        extension: "jpg",
+        count: 10,
+        title: "Buffer space",
+      }),
+    },
+    {
+      slug: "breath-out",
+      title: {
+        en: "Breath out",
+        bg: "Издишай",
+      },
+      year: "2023",
+      location: {
+        en: "Sofia",
+        bg: "София",
+      },
+      folder: "breath_out",
+      cover: "/breath_out/1.jpg",
+      summary: {
+        en: "A nocturnal series about smoke, gray words, and the city air that absorbs them.",
+        bg: "Нощна серия за дима, сивите думи и градския въздух, който ги поема.",
+      },
+      description: {
+        en: [
+          "Smoke drifts lightly and ethereally through the air, like a speech bubble in a comic strip beginning at my cigarette. For a moment, it looks innocent, almost beautiful.",
+          "Countless empty gray bubbles gather above the rooftops and slowly fill the sky, as if someone were trying to say something.",
+          "Gray words from gray everyday life rise and mingle with the breath of the chimneys.",
+          "And the air takes them in.",
+        ],
+        bg: [
+          "Димът се стели леко и ефирно във въздуха, като балонче на комикс, започващо от цигарата ми. За миг изглежда невинен, почти красив.",
+          "Безброй празни, сиви балончета се събират над покривите и бавно изпълват небето, сякаш някой се опитва да каже нещо.",
+          "Сиви думи от сивото ежедневие се издигат и се смесват с дъха на комините.",
+          "И въздухът ги поема.",
+        ],
+      },
+      images: makeImages({
+        folder: "breath_out",
+        extension: "jpg",
+        count: 10,
+        title: "Breath out",
+      }),
+    },
+    {
+      slug: "seaside-stories",
+      title: "Seaside stories",
+      year: "2025",
+      location: {
+        en: "Various coastlines",
+        bg: "Различни крайбрежия",
+      },
+      folder: "seaside_stories",
+      cover: "/seaside_stories/1.jpg",
+      summary: {
+        en: "An ongoing series exploring the quiet tensions, humor, and choreography of everyday life by the sea.",
+        bg: "Продължаваща серия, която изследва тихите напрежения, хумора и хореографията на ежедневието край морето.",
+      },
+      description: {
+        en: [
+          "Seaside Stories is an ongoing series of photographs made across different coastlines and summers. Without following a fixed narrative, the work explores the quiet tensions, humor, and choreography of everyday life by the sea.",
+        ],
+        bg: [
+          "Seaside Stories е продължаваща серия от фотографии, заснети по различни крайбрежия и през различни лета. Без да следва фиксиран разказ, работата изследва тихите напрежения, хумора и хореографията на ежедневието край морето.",
+        ],
+      },
+      images: makeImages({
+        folder: "seaside_stories",
+        extension: "jpg",
+        count: 11,
+        title: "Seaside stories",
+      }),
+    },
   ],
 };
 
@@ -315,6 +414,7 @@ export const headerContent = {
 function localizeProject(project, locale) {
   return {
     ...project,
+    title: text(project.title, locale),
     location: text(project.location, locale),
     summary: text(project.summary, locale),
     description: text(project.description, locale),
