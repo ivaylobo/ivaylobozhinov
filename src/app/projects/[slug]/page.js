@@ -35,16 +35,36 @@ export async function generateMetadata({ params, searchParams }) {
     };
   }
 
+  const projectPath = `/projects/${project.slug}`;
+  const shareImage = project.shareImage ?? {
+    url: project.cover,
+    alt: project.title,
+  };
+
   return {
     title: project.title,
     description: project.summary,
+    alternates: {
+      canonical: projectPath,
+    },
     openGraph: {
       title: project.title,
       description: project.summary,
       type: "article",
-      url: `/projects/${project.slug}`,
+      url: projectPath,
       siteName: siteContent.site.name.en,
-      images: [project.cover],
+      images: [shareImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.summary,
+      images: [
+        {
+          url: shareImage.url,
+          alt: shareImage.alt,
+        },
+      ],
     },
   };
 }

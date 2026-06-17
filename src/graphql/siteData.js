@@ -56,6 +56,12 @@ export const siteContent = {
       en: "A personal archive of documentary and authored photographic series.",
       bg: "Личен архив от документални и авторски фотографски серии.",
     },
+    shareImage: {
+      url: "/bogorov/10.jpg",
+      width: 1200,
+      height: 800,
+      alt: "The Flea Market in Dolni Bogrov, photograph 10",
+    },
     footer: "© Ivaylo Bozhinov",
   },
   labels: {
@@ -198,6 +204,12 @@ export const siteContent = {
       },
       folder: "between_the_waters",
       cover: "/between_the_waters/1.jpg",
+      shareImage: {
+        url: "/between_the_waters/1.jpg",
+        width: 2000,
+        height: 1333,
+        alt: "Between the Waters, photograph 1",
+      },
       summary: {
         en: "A black-and-white series about coastal rituals, bodies in water, and brief pauses between the sea and the shore.",
         bg: "Черно-бяла серия за крайбрежни ритуали, тела във вода и кратки паузи между морето и брега.",
@@ -236,6 +248,12 @@ export const siteContent = {
       },
       folder: "bogorov",
       cover: "/bogorov/1.jpg",
+      shareImage: {
+        url: "/bogorov/1.jpg",
+        width: 1200,
+        height: 800,
+        alt: "The Flea Market in Dolni Bogrov, photograph 1",
+      },
       summary: {
         en: "A documentary look at the Sunday market near Sofia, where trade, animals, and human stories intersect.",
         bg: "Документален поглед към неделния пазар край София, където търговия, животни и човешки истории се преплитат.",
@@ -267,6 +285,12 @@ export const siteContent = {
       },
       folder: "nevermore",
       cover: "/nevermore/1.jpg",
+      shareImage: {
+        url: "/nevermore/1.jpg",
+        width: 800,
+        height: 1200,
+        alt: "Nevermore, photograph 1",
+      },
       summary: {
         en: "A black-and-white series with a masked figure that turns the cityscape into a theatrical and slightly unsettling space.",
         bg: "Черно-бяла серия с маскиран персонаж, който превръща градския пейзаж в театрално и леко тревожно пространство.",
@@ -310,6 +334,12 @@ export const siteContent = {
       },
       folder: "buffer_space",
       cover: "/buffer_space/1.jpg",
+      shareImage: {
+        url: "/buffer_space/1.jpg",
+        width: 1000,
+        height: 714,
+        alt: "Buffer space, photograph 1",
+      },
       summary: {
         en: "A photographic series about the intangible spaces that give meaning to ordinary, seemingly concrete things.",
         bg: "Фотографска серия за неуловимите пространства, които придават смисъл на обикновените, привидно конкретни неща.",
@@ -342,6 +372,12 @@ export const siteContent = {
       },
       folder: "breath_out",
       cover: "/breath_out/1.jpg",
+      shareImage: {
+        url: "/breath_out/1.jpg",
+        width: 1200,
+        height: 800,
+        alt: "Breath out, photograph 1",
+      },
       summary: {
         en: "A nocturnal series about smoke, gray words, and the city air that absorbs them.",
         bg: "Нощна серия за дима, сивите думи и градския въздух, който ги поема.",
@@ -377,6 +413,12 @@ export const siteContent = {
       },
       folder: "seaside_stories",
       cover: "/seaside_stories/1.jpg",
+      shareImage: {
+        url: "/seaside_stories/1.jpg",
+        width: 1200,
+        height: 798,
+        alt: "Seaside stories, photograph 1",
+      },
       summary: {
         en: "An ongoing series exploring the quiet tensions, humor, and choreography of everyday life by the sea.",
         bg: "Продължаваща серия, която изследва тихите напрежения, хумора и хореографията на ежедневието край морето.",

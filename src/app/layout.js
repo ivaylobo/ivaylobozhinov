@@ -16,20 +16,37 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+const siteTitle = `${siteContent.site.name.en} | Photography`;
+const siteShareImage = siteContent.site.shareImage;
+
 export const metadata = {
   metadataBase: new URL(siteContent.site.url),
   title: {
-    default: `${siteContent.site.name.en} | Photography`,
+    default: siteTitle,
     template: `%s | ${siteContent.site.name.en}`,
   },
   description: siteContent.site.intro.en,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: `${siteContent.site.name.en} | Photography`,
+    title: siteTitle,
     description: siteContent.site.intro.en,
     type: "website",
     url: "/",
     siteName: siteContent.site.name.en,
-    images: [siteContent.projects[0].cover],
+    images: [siteShareImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteContent.site.intro.en,
+    images: [
+      {
+        url: siteShareImage.url,
+        alt: siteShareImage.alt,
+      },
+    ],
   },
 };
 
