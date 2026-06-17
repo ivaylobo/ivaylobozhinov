@@ -126,11 +126,13 @@ function MobilePhotoStack({ project }) {
 
 function GalleryFallback({ project, labels, locale }) {
   return (
-    <section className="gallery-section" aria-labelledby="gallery-fallback-title">
+    <section
+      className="gallery-section"
+      aria-label={`${labels.allPhotos}: ${project.title}`}
+    >
       <div className="gallery-heading">
         <div>
           <p className="eyebrow">{labels.allPhotos}</p>
-          <h2 id="gallery-fallback-title">{project.title}</h2>
         </div>
         <span>
           {project.images.length} {labels.photographs}

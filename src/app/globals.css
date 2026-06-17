@@ -443,7 +443,6 @@ h3 {
   flex-direction: column;
   justify-content: flex-end;
   gap: 16px;
-  border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   padding: 28px 0;
 }
@@ -943,6 +942,8 @@ h3 {
   .project-hero__copy {
     gap: 12px;
     justify-content: flex-start;
+    border-top: 0;
+    border-bottom: 0;
     padding: 10px 0 18px;
   }
 

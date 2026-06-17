@@ -132,11 +132,13 @@ export default function GalleryExperience({
 
   if (!activeImage) {
     return (
-      <section className="gallery-section" aria-labelledby="gallery-title">
+      <section
+        className="gallery-section"
+        aria-label={`${labels.allPhotos}: ${project.title}`}
+      >
         <div className="gallery-heading">
           <div>
             <p className="eyebrow">{labels.allPhotos}</p>
-            <h2 id="gallery-title">{project.title}</h2>
           </div>
           <span>
             {project.images.length} {labels.photographs}
