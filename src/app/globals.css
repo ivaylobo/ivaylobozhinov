@@ -452,6 +452,10 @@ h3 {
   font-size: 64px;
 }
 
+.project-mobile-copy {
+  display: none;
+}
+
 .text-link {
   display: inline-flex;
   width: fit-content;
@@ -515,6 +519,28 @@ h3 {
 
 .gallery-thumb--portrait img {
   object-fit: contain;
+}
+
+.mobile-photo-stack {
+  display: none;
+}
+
+.mobile-photo {
+  margin: 0;
+}
+
+.mobile-photo__frame {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--soft);
+}
+
+.mobile-photo--portrait .mobile-photo__frame {
+  aspect-ratio: 2 / 3;
+  width: min(100%, 430px);
+  margin: 0 auto;
 }
 
 .viewer {
@@ -902,12 +928,53 @@ h3 {
 
   .project-hero {
     gap: 18px;
+    margin-bottom: 18px;
   }
 
-  .project-hero__image,
+  .project-hero__image {
+    display: none;
+  }
+
   .project-loading__image {
     min-height: 0;
     aspect-ratio: 16 / 11;
+  }
+
+  .project-hero__copy {
+    gap: 12px;
+    justify-content: flex-start;
+    padding: 10px 0 18px;
+  }
+
+  .project-hero__copy h1 {
+    order: 1;
+  }
+
+  .project-hero__copy .eyebrow {
+    order: 2;
+  }
+
+  .project-hero__copy .text-link {
+    order: 3;
+  }
+
+  .project-hero__copy p:not(.eyebrow),
+  .project-hero__copy .share-button {
+    display: none;
+  }
+
+  .project-mobile-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-top: 1px solid var(--line);
+    padding: 24px 0 0;
+  }
+
+  .project-mobile-copy p {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.62;
   }
 
   .gallery-heading,
@@ -917,7 +984,17 @@ h3 {
     flex-direction: column;
   }
 
+  .gallery-section .gallery-heading {
+    display: none;
+  }
+
+  .gallery-section,
+  .viewer {
+    padding-top: 0;
+  }
+
   .gallery-grid {
+    display: none;
     gap: 8px;
   }
 
@@ -929,15 +1006,17 @@ h3 {
     flex-basis: calc((100% - 8px) / 4);
   }
 
+  .mobile-photo-stack {
+    display: grid;
+    gap: 18px;
+  }
+
   .viewer__stage {
-    min-height: 62vh;
+    display: none;
   }
 
-  .viewer__swiper {
-    height: 62vh;
-  }
-
-  .carousel-button {
+  .viewer__top,
+  .viewer__caption {
     display: none;
   }
 }

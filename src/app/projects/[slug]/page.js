@@ -94,6 +94,36 @@ function galleryThumbClassName(image) {
     .join(" ");
 }
 
+function mobilePhotoClassName(image) {
+  return [
+    "mobile-photo",
+    image.orientation === "portrait" ? "mobile-photo--portrait" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
+function MobilePhotoStack({ project }) {
+  return (
+    <div className="mobile-photo-stack">
+      {project.images.map((image, index) => (
+        <figure key={image.src} className={mobilePhotoClassName(image)}>
+          <div className="mobile-photo__frame">
+            <Image
+              src={image.src}
+              alt={image.alt}
+              fill
+              sizes="(max-width: 720px) calc(100vw - 28px), 720px"
+              className="image-contain"
+              loading={index < 2 ? "eager" : "lazy"}
+            />
+          </div>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
 function GalleryFallback({ project, labels, locale }) {
   return (
     <section className="gallery-section" aria-labelledby="gallery-fallback-title">
@@ -127,6 +157,8 @@ function GalleryFallback({ project, labels, locale }) {
           </Link>
         ))}
       </div>
+
+      <MobilePhotoStack project={project} />
     </section>
   );
 }
@@ -188,6 +220,13 @@ export default async function ProjectPage({ params, searchParams }) {
       >
         <GalleryExperience project={project} labels={labels} locale={locale} />
       </Suspense>
+
+      <section className="project-mobile-copy" aria-label={project.title}>
+        {descriptionParagraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
+        <FacebookShareButton label={labels.shareToFacebook} locale={locale} />
+      </section>
     </main>
   );
 }

@@ -56,6 +56,37 @@ function galleryThumbClassName(image) {
     .join(" ");
 }
 
+function mobilePhotoClassName(image) {
+  return [
+    "mobile-photo",
+    image.orientation === "portrait" ? "mobile-photo--portrait" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
+function MobilePhotoStack({ project, eagerIndex = 0 }) {
+  return (
+    <div className="mobile-photo-stack">
+      {project.images.map((image, index) => (
+        <figure key={image.src} className={mobilePhotoClassName(image)}>
+          <div className="mobile-photo__frame">
+            <Image
+              src={image.src}
+              alt={image.alt}
+              fill
+              sizes="(max-width: 720px) calc(100vw - 28px), 720px"
+              className="image-contain"
+              loading={index === eagerIndex || index < 2 ? "eager" : "lazy"}
+              fetchPriority={index === eagerIndex ? "high" : undefined}
+            />
+          </div>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
 function CarouselControls({ labels }) {
   const swiper = useSwiper();
 
@@ -132,6 +163,8 @@ export default function GalleryExperience({
             </Link>
           ))}
         </div>
+
+        <MobilePhotoStack project={project} />
       </section>
     );
   }
@@ -171,6 +204,8 @@ export default function GalleryExperience({
           {currentIndex + 1} / {project.images.length}
         </span>
       </div>
+
+      <MobilePhotoStack project={project} eagerIndex={activeIndex} />
 
       <div className="viewer__stage">
         <Swiper
