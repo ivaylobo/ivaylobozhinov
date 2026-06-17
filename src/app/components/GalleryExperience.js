@@ -47,6 +47,15 @@ function replaceViewerUrl(project, locale, photoNumber) {
   }
 }
 
+function galleryThumbClassName(image) {
+  return [
+    "gallery-thumb",
+    image.orientation === "portrait" ? "gallery-thumb--portrait" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
 function CarouselControls({ labels }) {
   const swiper = useSwiper();
 
@@ -109,7 +118,7 @@ export default function GalleryExperience({
               key={image.src}
               href={projectHref(project, locale, image.number)}
               scroll={false}
-              className="gallery-thumb"
+              className={galleryThumbClassName(image)}
               aria-label={`${project.title}, ${image.number}`}
             >
               <Image

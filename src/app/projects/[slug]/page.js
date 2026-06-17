@@ -65,6 +65,15 @@ function projectHref(project, locale, photoNumber) {
   };
 }
 
+function galleryThumbClassName(image) {
+  return [
+    "gallery-thumb",
+    image.orientation === "portrait" ? "gallery-thumb--portrait" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
 function GalleryFallback({ project, labels, locale }) {
   return (
     <section className="gallery-section" aria-labelledby="gallery-fallback-title">
@@ -84,7 +93,7 @@ function GalleryFallback({ project, labels, locale }) {
             key={image.src}
             href={projectHref(project, locale, image.number)}
             scroll={false}
-            className="gallery-thumb"
+            className={galleryThumbClassName(image)}
             aria-label={`${project.title}, ${image.number}`}
           >
             <Image

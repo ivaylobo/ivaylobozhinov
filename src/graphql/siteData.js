@@ -21,7 +21,9 @@ function textList(value, locale) {
   return value[locale] ?? value[defaultLocale] ?? [];
 }
 
-function makeImages({ folder, extension, count, title }) {
+function makeImages({ folder, extension, count, title, portrait = [] }) {
+  const portraitNumbers = new Set(portrait);
+
   return Array.from({ length: count }, (_, index) => {
     const number = index + 1;
 
@@ -30,6 +32,7 @@ function makeImages({ folder, extension, count, title }) {
       src: `/${folder}/${number}.${extension}`,
       alt: `${title}, photograph ${number}`,
       caption: `${title} / ${String(number).padStart(2, "0")}`,
+      orientation: portraitNumbers.has(number) ? "portrait" : "landscape",
     };
   });
 }
@@ -220,6 +223,7 @@ export const siteContent = {
         extension: "jpg",
         count: 10,
         title: "Between the Waters",
+        portrait: [2, 4],
       }),
     },
     {
@@ -290,6 +294,7 @@ export const siteContent = {
         extension: "jpg",
         count: 11,
         title: "Nevermore",
+        portrait: [1, 5, 11],
       }),
     },
     {

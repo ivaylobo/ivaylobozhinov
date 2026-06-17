@@ -492,17 +492,29 @@ h3 {
 }
 
 .gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
 }
 
 .gallery-thumb {
   position: relative;
+  flex: 0 0 calc((100% - 30px) / 4);
   aspect-ratio: 4 / 3;
   overflow: hidden;
   border-radius: 6px;
   background: var(--soft);
+}
+
+.gallery-thumb--portrait {
+  flex-basis: calc((100% - 30px) / 8);
+  aspect-ratio: 2 / 3;
+}
+
+.gallery-thumb--portrait img {
+  object-fit: contain;
 }
 
 .viewer {
@@ -562,31 +574,34 @@ h3 {
   z-index: 2;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--ink);
+  width: 78px;
+  height: 78px;
+  border: 0;
+  background: transparent;
+  color: rgba(214, 211, 201, 0.86);
   cursor: pointer;
   line-height: 1;
   transform: translateY(-50%);
   transition:
-    background 180ms ease,
-    border-color 180ms ease,
-    color 180ms ease;
+    color 180ms ease,
+    opacity 180ms ease;
 }
 
 .carousel-button__arrow {
-  width: 12px;
-  height: 12px;
+  width: 38px;
+  height: 38px;
   border-color: currentColor;
   border-style: solid;
-  border-width: 2px 2px 0 0;
+  border-width: 3px 3px 0 0;
+}
+
+.carousel-button:focus-visible {
+  outline: 2px solid rgba(247, 247, 244, 0.74);
+  outline-offset: 4px;
 }
 
 .carousel-button--prev {
-  left: 16px;
+  left: 20px;
 }
 
 .carousel-button--prev .carousel-button__arrow {
@@ -594,7 +609,7 @@ h3 {
 }
 
 .carousel-button--next {
-  right: 16px;
+  right: 20px;
 }
 
 .carousel-button--next .carousel-button__arrow {
@@ -737,8 +752,7 @@ h3 {
   }
 
   .carousel-button:hover {
-    background: #ffffff;
-    border-color: rgba(255, 255, 255, 0.72);
+    color: #f7f7f4;
   }
 }
 
@@ -780,8 +794,12 @@ h3 {
     min-height: 0;
   }
 
-  .gallery-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .gallery-thumb {
+    flex-basis: calc((100% - 20px) / 3);
+  }
+
+  .gallery-thumb--portrait {
+    flex-basis: calc((100% - 20px) / 6);
   }
 
   .project-hero__image,
@@ -900,8 +918,15 @@ h3 {
   }
 
   .gallery-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
+  }
+
+  .gallery-thumb {
+    flex-basis: calc((100% - 8px) / 2);
+  }
+
+  .gallery-thumb--portrait {
+    flex-basis: calc((100% - 8px) / 4);
   }
 
   .viewer__stage {
@@ -931,10 +956,6 @@ h3 {
 
   .site-brand__text span {
     max-width: 220px;
-  }
-
-  .gallery-grid {
-    grid-template-columns: 1fr 1fr;
   }
 
   .project-card__body,
