@@ -590,7 +590,10 @@ h3 {
 .viewer__image {
   position: relative;
   width: 100%;
+  max-width: 1000px;
   height: 100%;
+  max-height: 1000px;
+  margin: 0 auto;
 }
 
 .carousel-button {

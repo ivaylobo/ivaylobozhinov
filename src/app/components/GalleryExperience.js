@@ -10,6 +10,8 @@ import { localeQuery, resolveLocale } from "@/graphql/siteData";
 import "swiper/css";
 import "swiper/css/pagination";
 
+const VIEWER_IMAGE_SIZES = "(max-width: 1000px) 100vw, 1000px";
+
 function projectHref(project, locale, photoNumber) {
   const query = {
     ...localeQuery(locale),
@@ -236,10 +238,11 @@ export default function GalleryExperience({
                   src={image.src}
                   alt={image.alt}
                   fill
-                  sizes="100vw"
+                  sizes={VIEWER_IMAGE_SIZES}
                   className="image-contain"
                   loading={index === activeIndex ? "eager" : "lazy"}
                   fetchPriority={index === activeIndex ? "high" : undefined}
+                  unoptimized
                 />
               </figure>
             </SwiperSlide>

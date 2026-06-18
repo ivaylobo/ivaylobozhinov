@@ -233,9 +233,9 @@ export const siteContent = {
       images: makeImages({
         folder: "between_the_waters",
         extension: "jpg",
-        count: 10,
+        count: 12,
         title: "Between the Waters",
-        portrait: [2, 4],
+        portrait: [2, 5],
       }),
     },
     {
