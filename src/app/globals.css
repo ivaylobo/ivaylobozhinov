@@ -342,6 +342,10 @@ h3 {
   padding: 42px 0 70px;
 }
 
+.content-split--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .content-split__copy {
   display: flex;
   max-width: 720px;
